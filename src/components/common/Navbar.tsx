@@ -441,16 +441,16 @@ export const Navbar: React.FC = () => {
                     }}
                   >
                     <MenuItem onClick={() => handleSwitchPreset('CLIENT_1')}>
-                      <ListItemText primary="Cliente 1 (Alex Silva)" secondary="cliente1@eventos.com" />
+                      <ListItemText primary="João Silva (Cliente)" />
                     </MenuItem>
                     <MenuItem onClick={() => handleSwitchPreset('CLIENT_2')}>
-                      <ListItemText primary="Cliente 2 (Concorrência)" secondary="cliente2@eventos.com" />
+                      <ListItemText primary="Ana Oliveira (Cliente)" />
                     </MenuItem>
                     <MenuItem onClick={() => handleSwitchPreset('ORGANIZER')}>
-                      <ListItemText primary="Organizador" secondary="organizador@eventos.com" />
+                      <ListItemText primary="Maria Souza (Organizadora)" />
                     </MenuItem>
                     <MenuItem onClick={() => handleSwitchPreset('PORTER')}>
-                      <ListItemText primary="Portaria (Validador)" secondary="portaria@eventos.com" />
+                      <ListItemText primary="Lucas Porteiro" />
                     </MenuItem>
                   </Menu>
                 </>
@@ -652,7 +652,15 @@ export const Navbar: React.FC = () => {
             onClick={() => handleSwitchPreset('CLIENT_1')}
             sx={{ justifyContent: 'flex-start', borderColor: '#1E293B', color: '#00D2FF' }}
           >
-            Cliente 1 (Alex Silva)
+            João Silva (Cliente)
+          </Button>
+          <Button
+            size="small"
+            variant="outlined"
+            onClick={() => handleSwitchPreset('CLIENT_2')}
+            sx={{ justifyContent: 'flex-start', borderColor: '#1E293B', color: '#00D2FF' }}
+          >
+            Ana Oliveira (Cliente)
           </Button>
           <Button
             size="small"
@@ -660,7 +668,7 @@ export const Navbar: React.FC = () => {
             onClick={() => handleSwitchPreset('ORGANIZER')}
             sx={{ justifyContent: 'flex-start', borderColor: '#1E293B', color: '#8B5CF6' }}
           >
-            Organizador
+            Maria Souza (Organizadora)
           </Button>
           <Button
             size="small"
@@ -668,7 +676,7 @@ export const Navbar: React.FC = () => {
             onClick={() => handleSwitchPreset('PORTER')}
             sx={{ justifyContent: 'flex-start', borderColor: '#1E293B', color: '#10B981' }}
           >
-            Portaria (Validador)
+            Lucas Porteiro
           </Button>
         </Stack>
 

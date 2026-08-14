@@ -158,7 +158,7 @@ export const MyTicketsPage: React.FC = () => {
                 },
               }}
             >
-              🧪 Alternar para Cliente (Alex Silva)
+              🧪 Alternar para Perfil de Cliente
             </Button>
           </Stack>
         </Paper>

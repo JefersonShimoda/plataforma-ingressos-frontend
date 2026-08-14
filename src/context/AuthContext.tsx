@@ -33,25 +33,25 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const PRESET_USERS = {
   ORGANIZER: {
-    label: 'Organizador',
+    label: 'Maria Souza (Organizadora)',
     email: 'organizador@eventos.com',
     password: 'senha123456',
     role: 'ORGANIZER' as UserRole,
   },
   CLIENT_1: {
-    label: 'Cliente 1 (Alex Silva)',
+    label: 'João Silva (Cliente)',
     email: 'cliente1@eventos.com',
     password: 'senhaSegura123',
     role: 'CLIENT' as UserRole,
   },
   CLIENT_2: {
-    label: 'Cliente 2 (Concorrência)',
+    label: 'Ana Oliveira (Cliente)',
     email: 'cliente2@eventos.com',
     password: 'senhaSegura123',
     role: 'CLIENT' as UserRole,
   },
   PORTER: {
-    label: 'Portaria (Validador)',
+    label: 'Lucas Porteiro',
     email: 'portaria@eventos.com',
     password: 'porteiroSenha123',
     role: 'PORTER' as UserRole,
@@ -154,19 +154,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (!userInfo) {
       // Fallback user matching credentials
       let role: UserRole = 'CLIENT';
-      let name = payload.email.split('@')[0];
       if (payload.email === PRESET_USERS.ORGANIZER.email) {
         role = 'ORGANIZER';
-        name = 'Organizador Oficial';
       } else if (payload.email === PRESET_USERS.PORTER.email) {
         role = 'PORTER';
-        name = 'Porteiro Responsável';
-      } else if (payload.email === PRESET_USERS.CLIENT_1.email) {
-        name = 'Alex Silva';
       }
+      const rawName = payload.email.split('@')[0];
+      const fallbackName = rawName.charAt(0).toUpperCase() + rawName.slice(1);
       userInfo = {
         id: Date.now(),
-        name,
+        name: fallbackName,
         email: payload.email,
         role,
       };

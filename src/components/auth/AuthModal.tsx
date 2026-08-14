@@ -470,7 +470,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               disabled={loading}
               sx={{ borderColor: '#1E293B', color: '#00D2FF', fontSize: '0.75rem', py: 0.5 }}
             >
-              Cliente 1
+              João Silva (Cliente)
             </Button>
             <Button
               size="small"
@@ -479,7 +479,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               disabled={loading}
               sx={{ borderColor: '#1E293B', color: '#00D2FF', fontSize: '0.75rem', py: 0.5 }}
             >
-              Cliente 2
+              Ana Oliveira (Cliente)
             </Button>
             <Button
               size="small"
@@ -488,7 +488,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               disabled={loading}
               sx={{ borderColor: '#1E293B', color: '#8B5CF6', fontSize: '0.75rem', py: 0.5 }}
             >
-              Organizador
+              Maria Souza (Organizadora)
             </Button>
             <Button
               size="small"
@@ -497,7 +497,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               disabled={loading}
               sx={{ borderColor: '#1E293B', color: '#10B981', fontSize: '0.75rem', py: 0.5 }}
             >
-              Portaria
+              Lucas Porteiro
             </Button>
           </Stack>
         </Stack>

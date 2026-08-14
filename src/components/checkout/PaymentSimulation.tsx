@@ -27,6 +27,7 @@ import {
 import { QRCodeSVG } from 'qrcode.react';
 import { PaymentMethod, PaymentStatus } from '../../types';
 import { useSnackbar } from 'notistack';
+import { useAuth } from '../../context/AuthContext';
 
 interface PaymentSimulationProps {
   reservationId: number;
@@ -41,10 +42,11 @@ export const PaymentSimulation: React.FC<PaymentSimulationProps> = ({
   onSimulatePayment,
   loading = false,
 }) => {
+  const { user } = useAuth();
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethod>('PIX');
   const [copiedPix, setCopiedPix] = useState(false);
   const [cardNumber, setCardNumber] = useState('4532 •••• •••• 8829');
-  const [cardHolder, setCardHolder] = useState('ALEX SILVA');
+  const [cardHolder, setCardHolder] = useState(() => (user?.name ? user.name.toUpperCase() : 'CLIENTE'));
   const [cardExpiry, setCardExpiry] = useState('12/29');
   const [cardCvv, setCardCvv] = useState('882');
 

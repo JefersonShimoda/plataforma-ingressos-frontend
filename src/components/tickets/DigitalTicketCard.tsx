@@ -228,13 +228,21 @@ export const DigitalTicketCard: React.FC<DigitalTicketCardProps> = ({ ticket, on
 
           {/* QR Code & Actions Row */}
           <Stack
-            direction={{ xs: 'column', sm: 'row' }}
-            spacing={3}
-            alignItems="center"
+            direction={{ xs: 'column', lg: 'row' }}
+            spacing={{ xs: 2.5, lg: 3 }}
+            alignItems={{ xs: 'stretch', sm: 'center', lg: 'center' }}
             justifyContent="space-between"
           >
             {/* Encrypted QR Code Box */}
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: { xs: 'column', sm: 'row' },
+                alignItems: 'center',
+                gap: 2,
+                textAlign: { xs: 'center', sm: 'left' },
+              }}
+            >
               <Box
                 sx={{
                   p: 1.5,
@@ -244,12 +252,21 @@ export const DigitalTicketCard: React.FC<DigitalTicketCardProps> = ({ ticket, on
                   alignItems: 'center',
                   justifyContent: 'center',
                   boxShadow: '0 4px 16px rgba(0, 210, 255, 0.2)',
+                  flexShrink: 0,
                 }}
               >
                 <QRCodeSVG value={ticket.qrCodeToken} size={110} />
               </Box>
               <Box>
-                <Typography variant="caption" sx={{ color: '#94A3B8', display: 'block', maxWidth: 200, fontSize: '0.75rem' }}>
+                <Typography
+                  variant="caption"
+                  sx={{
+                    color: '#94A3B8',
+                    display: 'block',
+                    maxWidth: { xs: '100%', sm: 220 },
+                    fontSize: '0.75rem',
+                  }}
+                >
                   {ticket.validated
                     ? 'Ingresso já validado na portaria. QR Code inativo para novas entradas.'
                     : 'Apresente este código na entrada do evento. O QR Code é dinâmico e seguro.'}
@@ -260,7 +277,7 @@ export const DigitalTicketCard: React.FC<DigitalTicketCardProps> = ({ ticket, on
                   size="small"
                   sx={{
                     mt: 1,
-                    height: 20,
+                    height: 22,
                     fontSize: '0.65rem',
                     backgroundColor: ticket.validated ? 'rgba(245, 158, 11, 0.1)' : 'rgba(0, 210, 255, 0.1)',
                     color: ticket.validated ? '#FBBF24' : '#00D2FF',
@@ -269,15 +286,16 @@ export const DigitalTicketCard: React.FC<DigitalTicketCardProps> = ({ ticket, on
               </Box>
             </Box>
 
-            {/* Actions Stack */}
+            {/* Actions Stack: Always Stacked Vertically */}
             <Stack
-              direction={{ xs: 'column', sm: 'row' }}
-              spacing={1.5}
-              sx={{ width: { xs: '100%', sm: 'auto' }, flexWrap: 'wrap', gap: 1 }}
+              direction="column"
+              spacing={1.25}
+              sx={{ width: { xs: '100%', sm: 230, md: 250 } }}
             >
               {/* Demo Mode Button: Simulate as Porter */}
               <Button
                 variant="outlined"
+                fullWidth
                 onClick={() => setDemoModalOpen(true)}
                 startIcon={<QrCode size={16} />}
                 sx={{
@@ -288,7 +306,7 @@ export const DigitalTicketCard: React.FC<DigitalTicketCardProps> = ({ ticket, on
                   fontSize: '0.8rem',
                   py: 1,
                   px: 2,
-                  whiteSpace: 'nowrap',
+                  justifyContent: 'center',
                   '&:hover': {
                     borderColor: ticket.validated ? '#F59E0B' : '#10B981',
                     backgroundColor: ticket.validated ? 'rgba(245, 158, 11, 0.15)' : 'rgba(16, 185, 129, 0.15)',
@@ -301,15 +319,17 @@ export const DigitalTicketCard: React.FC<DigitalTicketCardProps> = ({ ticket, on
               {/* Share Link Button */}
               <Button
                 variant="contained"
+                fullWidth
                 onClick={handleCopyShareLink}
                 startIcon={copiedLink ? <Check size={18} /> : <Share2 size={18} />}
                 sx={{
                   background: 'linear-gradient(135deg, #00D2FF 0%, #8B5CF6 100%)',
                   color: '#FFFFFF',
                   fontWeight: 700,
-                  px: 2.5,
+                  fontSize: '0.8rem',
                   py: 1,
-                  whiteSpace: 'nowrap',
+                  px: 2,
+                  justifyContent: 'center',
                 }}
               >
                 {copiedLink ? 'Link Copiado!' : 'Compartilhar Ingresso'}

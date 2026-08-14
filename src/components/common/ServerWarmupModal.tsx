@@ -9,7 +9,7 @@ import {
   Button,
   Fade,
 } from '@mui/material';
-import { Server, Database, CheckCircle2, AlertCircle, RefreshCw, Sparkles } from 'lucide-react';
+import { Server, Database, CheckCircle2, AlertCircle, RefreshCw, Sparkles, ArrowRight } from 'lucide-react';
 import { api } from '../../api/client';
 
 export const ServerWarmupModal: React.FC = () => {
@@ -72,15 +72,14 @@ export const ServerWarmupModal: React.FC = () => {
       setIsReady(true);
       setIsWarmingUp(false);
       sessionStorage.setItem('server_warmup_checked', 'true');
-
-      // Close modal smoothly after showing success
-      setTimeout(() => {
-        setIsOpen(false);
-      }, 1400);
     } else {
       setIsWarmingUp(false);
       setHasError(true);
     }
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
   };
 
   if (!isOpen) return null;
@@ -245,6 +244,32 @@ export const ServerWarmupModal: React.FC = () => {
             );
           })}
         </Stack>
+
+        {isReady && (
+          <Button
+            variant="contained"
+            fullWidth
+            onClick={handleClose}
+            endIcon={<ArrowRight size={18} />}
+            sx={{
+              py: 1.4,
+              background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+              color: '#FFFFFF',
+              fontWeight: 800,
+              fontSize: '0.95rem',
+              borderRadius: 3,
+              boxShadow: '0 4px 20px rgba(16, 185, 129, 0.4)',
+              transition: 'all 0.25s ease',
+              '&:hover': {
+                background: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
+                boxShadow: '0 6px 25px rgba(16, 185, 129, 0.6)',
+                transform: 'translateY(-2px)',
+              },
+            }}
+          >
+            Acessar Plataforma Agora
+          </Button>
+        )}
 
         {hasError && (
           <Button

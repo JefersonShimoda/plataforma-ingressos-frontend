@@ -5,6 +5,7 @@ import { SnackbarProvider } from 'notistack';
 import theme from './theme/theme';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { AuthModal } from './components/auth/AuthModal';
+import { ServerWarmupModal } from './components/common/ServerWarmupModal';
 import { Navbar } from './components/common/Navbar';
 import { Footer } from './components/common/Footer';
 import { ProtectedRoute } from './components/common/ProtectedRoute';
@@ -48,6 +49,7 @@ export const App: React.FC = () => {
         <AuthProvider>
           <BrowserRouter>
             <GlobalAuthModal />
+            <ServerWarmupModal />
             <Box
               sx={{
                 display: 'flex',

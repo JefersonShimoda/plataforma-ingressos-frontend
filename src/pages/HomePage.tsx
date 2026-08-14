@@ -285,7 +285,15 @@ export const HomePage: React.FC = () => {
 
         {/* Error Alert */}
         {error && (
-          <Alert severity="warning" sx={{ mb: 4, backgroundColor: '#1A1829', color: '#FBBF24' }}>
+          <Alert
+            severity="warning"
+            action={
+              <Button color="inherit" size="small" onClick={loadEvents} sx={{ fontWeight: 700 }}>
+                Tentar Novamente
+              </Button>
+            }
+            sx={{ mb: 4, backgroundColor: '#1A1829', color: '#FBBF24' }}
+          >
             {error}
           </Alert>
         )}

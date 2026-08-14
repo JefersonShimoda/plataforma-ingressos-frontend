@@ -7,7 +7,7 @@ export const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 15000,
+  timeout: 60000, // 60 segundos para suportar inicialização (cold start) no plano gratuito
 });
 
 // Request Interceptor: Attach JWT Bearer Token
@@ -22,22 +22,45 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response Interceptor: Handle 401/403 and normalize error messages
+// Response Interceptor: Auto-retry on cold start (502/503/504/Network Error) + Auth Guard
 api.interceptors.response.use(
   (response) => response,
-  (error: AxiosError) => {
+  async (error: AxiosError) => {
+    const config = error.config as (typeof error.config & { _retryCount?: number });
+
+    // Check if error is due to server waking up (cold start)
+    const isColdStartError =
+      !error.response ||
+      error.response.status === 502 ||
+      error.response.status === 503 ||
+      error.response.status === 504 ||
+      error.code === 'ECONNABORTED' ||
+      error.code === 'ERR_NETWORK';
+
+    if (config && isColdStartError) {
+      config._retryCount = config._retryCount || 0;
+
+      // Retry up to 3 times with exponential backoff (2s, 4s, 6s)
+      if (config._retryCount < 3) {
+        config._retryCount += 1;
+        const delay = config._retryCount * 2000;
+        await new Promise((resolve) => setTimeout(resolve, delay));
+        return api(config);
+      }
+    }
+
     if (error.response) {
       const status = error.response.status;
-      
-      // Auto logout on 401 Unauthorized or 403 Forbidden when token was sent
-      if (status === 401 || status === 403) {
+
+      // Auto logout on valid 401 Unauthorized or 403 Forbidden
+      if ((status === 401 || status === 403) && error.response.data) {
         const hasToken = localStorage.getItem('token');
         if (hasToken) {
-          // If we had a token and got 401/403, clear it and dispatch event
           window.dispatchEvent(new CustomEvent('auth:unauthorized'));
         }
       }
     }
+
     return Promise.reject(error);
   }
 );

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Box, CircularProgress, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, CircularProgress, Typography, Fade } from '@mui/material';
 
 interface LoadingSpinnerProps {
   message?: string;
@@ -10,6 +10,15 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   message = 'Carregando...',
   minHeight = '50vh',
 }) => {
+  const [showWakingUpHint, setShowWakingUpHint] = useState<boolean>(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowWakingUpHint(true);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <Box
       sx={{
@@ -20,6 +29,7 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
         justifyContent: 'center',
         gap: 2,
         py: 6,
+        textAlign: 'center',
       }}
     >
       <CircularProgress
@@ -30,9 +40,24 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
         }}
       />
       {message && (
-        <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 500 }}>
+        <Typography variant="body1" sx={{ color: '#FFFFFF', fontWeight: 600 }}>
           {message}
         </Typography>
+      )}
+      {showWakingUpHint && (
+        <Fade in={showWakingUpHint}>
+          <Typography
+            variant="caption"
+            sx={{
+              color: '#94A3B8',
+              maxWidth: 420,
+              px: 2,
+              animation: 'pulse 2s infinite',
+            }}
+          >
+            ☕ Conectando à nuvem... O servidor gratuito hiberna quando ocioso e pode levar alguns segundos para acordar no primeiro acesso.
+          </Typography>
+        </Fade>
       )}
     </Box>
   );

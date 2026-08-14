@@ -1,0 +1,1242 @@
+﻿{
+    "openapi":  "3.1.0",
+    "info":  {
+                 "title":  "Plataforma de Ingressos \u0026 Eventos - API",
+                 "description":  "API REST para gerenciamento de eventos a partir de catÃ¡logo externo (TMDb / Ticketmaster), reserva concorrente de assentos, pagamento simulado, emissÃ£o de QR Code criptogrÃ¡fico e portaria de check-in.",
+                 "contact":  {
+                                 "name":  "Jeferson Shimoda",
+                                 "email":  "contato@jefersonshimoda.com.br"
+                             },
+                 "version":  "1.0.0"
+             },
+    "servers":  [
+                    {
+                        "url":  "http://localhost:8080",
+                        "description":  "Generated server url"
+                    }
+                ],
+    "security":  [
+                     {
+                         "BearerAuth":  [
+
+                                        ]
+                     }
+                 ],
+    "paths":  {
+                  "/users/register":  {
+                                          "post":  {
+                                                       "tags":  [
+                                                                    "user-controller"
+                                                                ],
+                                                       "operationId":  "register",
+                                                       "requestBody":  {
+                                                                           "content":  {
+                                                                                           "application/json":  {
+                                                                                                                    "schema":  "@{$ref=#/components/schemas/RegisterUserDTO}"
+                                                                                                                }
+                                                                                       },
+                                                                           "required":  true
+                                                                       },
+                                                       "responses":  {
+                                                                         "200":  {
+                                                                                     "description":  "OK",
+                                                                                     "content":  {
+                                                                                                     "*/*":  "@{schema=}"
+                                                                                                 }
+                                                                                 }
+                                                                     }
+                                                   }
+                                      },
+                  "/users/login":  {
+                                       "post":  {
+                                                    "tags":  [
+                                                                 "user-controller"
+                                                             ],
+                                                    "operationId":  "login",
+                                                    "requestBody":  {
+                                                                        "content":  {
+                                                                                        "application/json":  {
+                                                                                                                 "schema":  "@{$ref=#/components/schemas/LoginDTO}"
+                                                                                                             }
+                                                                                    },
+                                                                        "required":  true
+                                                                    },
+                                                    "responses":  {
+                                                                      "200":  {
+                                                                                  "description":  "OK",
+                                                                                  "content":  {
+                                                                                                  "*/*":  "@{schema=}"
+                                                                                              }
+                                                                              }
+                                                                  }
+                                                }
+                                   },
+                  "/reservations":  {
+                                        "post":  {
+                                                     "tags":  [
+                                                                  "reservation-controller"
+                                                              ],
+                                                     "operationId":  "createReservation",
+                                                     "requestBody":  {
+                                                                         "content":  {
+                                                                                         "application/json":  {
+                                                                                                                  "schema":  "@{$ref=#/components/schemas/CreateReservationDTO}"
+                                                                                                              }
+                                                                                     },
+                                                                         "required":  true
+                                                                     },
+                                                     "responses":  {
+                                                                       "200":  {
+                                                                                   "description":  "OK",
+                                                                                   "content":  {
+                                                                                                   "*/*":  "@{schema=}"
+                                                                                               }
+                                                                               }
+                                                                   }
+                                                 }
+                                    },
+                  "/reservations/{id}/cancel":  {
+                                                    "post":  {
+                                                                 "tags":  [
+                                                                              "reservation-controller"
+                                                                          ],
+                                                                 "operationId":  "cancelReservation",
+                                                                 "parameters":  [
+                                                                                    {
+                                                                                        "name":  "id",
+                                                                                        "in":  "path",
+                                                                                        "required":  true,
+                                                                                        "schema":  {
+                                                                                                       "type":  "integer",
+                                                                                                       "format":  "int64"
+                                                                                                   }
+                                                                                    }
+                                                                                ],
+                                                                 "responses":  {
+                                                                                   "200":  {
+                                                                                               "description":  "OK",
+                                                                                               "content":  {
+                                                                                                               "*/*":  "@{schema=}"
+                                                                                                           }
+                                                                                           }
+                                                                               }
+                                                             }
+                                                },
+                  "/payments/process":  {
+                                            "post":  {
+                                                         "tags":  [
+                                                                      "payment-controller"
+                                                                  ],
+                                                         "operationId":  "processPayment",
+                                                         "requestBody":  {
+                                                                             "content":  {
+                                                                                             "application/json":  {
+                                                                                                                      "schema":  "@{$ref=#/components/schemas/ProcessPaymentDTO}"
+                                                                                                                  }
+                                                                                         },
+                                                                             "required":  true
+                                                                         },
+                                                         "responses":  {
+                                                                           "200":  {
+                                                                                       "description":  "OK",
+                                                                                       "content":  {
+                                                                                                       "*/*":  "@{schema=}"
+                                                                                                   }
+                                                                                   }
+                                                                       }
+                                                     }
+                                        },
+                  "/events":  {
+                                  "get":  {
+                                              "tags":  [
+                                                           "event-controller"
+                                                       ],
+                                              "operationId":  "getAllEvents",
+                                              "parameters":  [
+                                                                 {
+                                                                     "name":  "query",
+                                                                     "in":  "query",
+                                                                     "required":  false,
+                                                                     "schema":  {
+                                                                                    "type":  "string"
+                                                                                }
+                                                                 },
+                                                                 {
+                                                                     "name":  "category",
+                                                                     "in":  "query",
+                                                                     "required":  false,
+                                                                     "schema":  {
+                                                                                    "type":  "string"
+                                                                                }
+                                                                 },
+                                                                 {
+                                                                     "name":  "type",
+                                                                     "in":  "query",
+                                                                     "required":  false,
+                                                                     "schema":  {
+                                                                                    "type":  "string",
+                                                                                    "enum":  "MOVIE SHOW THEATER"
+                                                                                }
+                                                                 }
+                                                             ],
+                                              "responses":  {
+                                                                "200":  {
+                                                                            "description":  "OK",
+                                                                            "content":  {
+                                                                                            "*/*":  "@{schema=}"
+                                                                                        }
+                                                                        }
+                                                            }
+                                          },
+                                  "post":  {
+                                               "tags":  [
+                                                            "event-controller"
+                                                        ],
+                                               "operationId":  "createEvent",
+                                               "requestBody":  {
+                                                                   "content":  {
+                                                                                   "application/json":  {
+                                                                                                            "schema":  "@{$ref=#/components/schemas/CreateEventDTO}"
+                                                                                                        }
+                                                                               },
+                                                                   "required":  true
+                                                               },
+                                               "responses":  {
+                                                                 "200":  {
+                                                                             "description":  "OK",
+                                                                             "content":  {
+                                                                                             "*/*":  "@{schema=}"
+                                                                                         }
+                                                                         }
+                                                             }
+                                           }
+                              },
+                  "/events/{id}/porters":  {
+                                               "get":  {
+                                                           "tags":  [
+                                                                        "event-controller"
+                                                                    ],
+                                                           "operationId":  "getAssignedPorters",
+                                                           "parameters":  [
+                                                                              {
+                                                                                  "name":  "id",
+                                                                                  "in":  "path",
+                                                                                  "required":  true,
+                                                                                  "schema":  {
+                                                                                                 "type":  "integer",
+                                                                                                 "format":  "int64"
+                                                                                             }
+                                                                              }
+                                                                          ],
+                                                           "responses":  {
+                                                                             "200":  {
+                                                                                         "description":  "OK",
+                                                                                         "content":  {
+                                                                                                         "*/*":  "@{schema=}"
+                                                                                                     }
+                                                                                     }
+                                                                         }
+                                                       },
+                                               "post":  {
+                                                            "tags":  [
+                                                                         "event-controller"
+                                                                     ],
+                                                            "operationId":  "assignPorters",
+                                                            "parameters":  [
+                                                                               {
+                                                                                   "name":  "id",
+                                                                                   "in":  "path",
+                                                                                   "required":  true,
+                                                                                   "schema":  {
+                                                                                                  "type":  "integer",
+                                                                                                  "format":  "int64"
+                                                                                              }
+                                                                               }
+                                                                           ],
+                                                            "requestBody":  {
+                                                                                "content":  {
+                                                                                                "application/json":  {
+                                                                                                                         "schema":  "@{$ref=#/components/schemas/AssignPortersDTO}"
+                                                                                                                     }
+                                                                                            },
+                                                                                "required":  true
+                                                                            },
+                                                            "responses":  {
+                                                                              "200":  {
+                                                                                          "description":  "OK",
+                                                                                          "content":  {
+                                                                                                          "*/*":  "@{schema=}"
+                                                                                                      }
+                                                                                      }
+                                                                          }
+                                                        }
+                                           },
+                  "/checkin/validate":  {
+                                            "post":  {
+                                                         "tags":  [
+                                                                      "checkin-controller"
+                                                                  ],
+                                                         "operationId":  "validateTicket",
+                                                         "requestBody":  {
+                                                                             "content":  {
+                                                                                             "application/json":  {
+                                                                                                                      "schema":  "@{$ref=#/components/schemas/ValidateCheckinDTO}"
+                                                                                                                  }
+                                                                                         },
+                                                                             "required":  true
+                                                                         },
+                                                         "responses":  {
+                                                                           "200":  {
+                                                                                       "description":  "OK",
+                                                                                       "content":  {
+                                                                                                       "*/*":  "@{schema=}"
+                                                                                                   }
+                                                                                   }
+                                                                       }
+                                                     }
+                                        },
+                  "/users/porters":  {
+                                         "get":  {
+                                                     "tags":  [
+                                                                  "user-controller"
+                                                              ],
+                                                     "operationId":  "getAllPorters",
+                                                     "responses":  {
+                                                                       "200":  {
+                                                                                   "description":  "OK",
+                                                                                   "content":  {
+                                                                                                   "*/*":  "@{schema=}"
+                                                                                               }
+                                                                               }
+                                                                   }
+                                                 }
+                                     },
+                  "/tickets/{id}":  {
+                                        "get":  {
+                                                    "tags":  [
+                                                                 "ticket-controller"
+                                                             ],
+                                                    "operationId":  "getTicketById",
+                                                    "parameters":  [
+                                                                       {
+                                                                           "name":  "id",
+                                                                           "in":  "path",
+                                                                           "required":  true,
+                                                                           "schema":  {
+                                                                                          "type":  "integer",
+                                                                                          "format":  "int64"
+                                                                                      }
+                                                                       }
+                                                                   ],
+                                                    "responses":  {
+                                                                      "200":  {
+                                                                                  "description":  "OK",
+                                                                                  "content":  {
+                                                                                                  "*/*":  "@{schema=}"
+                                                                                              }
+                                                                              }
+                                                                  }
+                                                }
+                                    },
+                  "/tickets/share/{shareToken}":  {
+                                                      "get":  {
+                                                                  "tags":  [
+                                                                               "ticket-controller"
+                                                                           ],
+                                                                  "operationId":  "getTicketByShareToken",
+                                                                  "parameters":  [
+                                                                                     {
+                                                                                         "name":  "shareToken",
+                                                                                         "in":  "path",
+                                                                                         "required":  true,
+                                                                                         "schema":  {
+                                                                                                        "type":  "string"
+                                                                                                    }
+                                                                                     }
+                                                                                 ],
+                                                                  "responses":  {
+                                                                                    "200":  {
+                                                                                                "description":  "OK",
+                                                                                                "content":  {
+                                                                                                                "*/*":  "@{schema=}"
+                                                                                                            }
+                                                                                            }
+                                                                                }
+                                                              }
+                                                  },
+                  "/tickets/my-tickets":  {
+                                              "get":  {
+                                                          "tags":  [
+                                                                       "ticket-controller"
+                                                                   ],
+                                                          "operationId":  "getMyTickets",
+                                                          "responses":  {
+                                                                            "200":  {
+                                                                                        "description":  "OK",
+                                                                                        "content":  {
+                                                                                                        "*/*":  "@{schema=}"
+                                                                                                    }
+                                                                                    }
+                                                                        }
+                                                      }
+                                          },
+                  "/reservations/{id}":  {
+                                             "get":  {
+                                                         "tags":  [
+                                                                      "reservation-controller"
+                                                                  ],
+                                                         "operationId":  "getReservationById",
+                                                         "parameters":  [
+                                                                            {
+                                                                                "name":  "id",
+                                                                                "in":  "path",
+                                                                                "required":  true,
+                                                                                "schema":  {
+                                                                                               "type":  "integer",
+                                                                                               "format":  "int64"
+                                                                                           }
+                                                                            }
+                                                                        ],
+                                                         "responses":  {
+                                                                           "200":  {
+                                                                                       "description":  "OK",
+                                                                                       "content":  {
+                                                                                                       "*/*":  "@{schema=}"
+                                                                                                   }
+                                                                                   }
+                                                                       }
+                                                     }
+                                         },
+                  "/reservations/my-reservations":  {
+                                                        "get":  {
+                                                                    "tags":  [
+                                                                                 "reservation-controller"
+                                                                             ],
+                                                                    "operationId":  "getMyReservations",
+                                                                    "responses":  {
+                                                                                      "200":  {
+                                                                                                  "description":  "OK",
+                                                                                                  "content":  {
+                                                                                                                  "*/*":  "@{schema=}"
+                                                                                                              }
+                                                                                              }
+                                                                                  }
+                                                                }
+                                                    },
+                  "/events/{id}":  {
+                                       "get":  {
+                                                   "tags":  [
+                                                                "event-controller"
+                                                            ],
+                                                   "operationId":  "getEventById",
+                                                   "parameters":  [
+                                                                      {
+                                                                          "name":  "id",
+                                                                          "in":  "path",
+                                                                          "required":  true,
+                                                                          "schema":  {
+                                                                                         "type":  "integer",
+                                                                                         "format":  "int64"
+                                                                                     }
+                                                                      }
+                                                                  ],
+                                                   "responses":  {
+                                                                     "200":  {
+                                                                                 "description":  "OK",
+                                                                                 "content":  {
+                                                                                                 "*/*":  "@{schema=}"
+                                                                                             }
+                                                                             }
+                                                                 }
+                                               },
+                                       "delete":  {
+                                                      "tags":  [
+                                                                   "event-controller"
+                                                               ],
+                                                      "operationId":  "cancelEvent",
+                                                      "parameters":  [
+                                                                         {
+                                                                             "name":  "id",
+                                                                             "in":  "path",
+                                                                             "required":  true,
+                                                                             "schema":  {
+                                                                                            "type":  "integer",
+                                                                                            "format":  "int64"
+                                                                                        }
+                                                                         }
+                                                                     ],
+                                                      "responses":  {
+                                                                        "200":  {
+                                                                                    "description":  "OK",
+                                                                                    "content":  {
+                                                                                                    "*/*":  "@{schema=}"
+                                                                                                }
+                                                                                }
+                                                                    }
+                                                  }
+                                   },
+                  "/events/my-events":  {
+                                            "get":  {
+                                                        "tags":  [
+                                                                     "event-controller"
+                                                                 ],
+                                                        "operationId":  "getMyEvents",
+                                                        "responses":  {
+                                                                          "200":  {
+                                                                                      "description":  "OK",
+                                                                                      "content":  {
+                                                                                                      "*/*":  "@{schema=}"
+                                                                                                  }
+                                                                                  }
+                                                                      }
+                                                    }
+                                        },
+                  "/checkin/events/{eventId}/stats":  {
+                                                          "get":  {
+                                                                      "tags":  [
+                                                                                   "checkin-controller"
+                                                                               ],
+                                                                      "operationId":  "getEventCheckinStats",
+                                                                      "parameters":  [
+                                                                                         {
+                                                                                             "name":  "eventId",
+                                                                                             "in":  "path",
+                                                                                             "required":  true,
+                                                                                             "schema":  {
+                                                                                                            "type":  "integer",
+                                                                                                            "format":  "int64"
+                                                                                                        }
+                                                                                         }
+                                                                                     ],
+                                                                      "responses":  {
+                                                                                        "200":  {
+                                                                                                    "description":  "OK",
+                                                                                                    "content":  {
+                                                                                                                    "*/*":  "@{schema=}"
+                                                                                                                }
+                                                                                                }
+                                                                                    }
+                                                                  }
+                                                      },
+                  "/catalog":  {
+                                   "get":  {
+                                               "tags":  [
+                                                            "external-catalog-controller"
+                                                        ],
+                                               "operationId":  "getCatalog",
+                                               "parameters":  [
+                                                                  {
+                                                                      "name":  "query",
+                                                                      "in":  "query",
+                                                                      "required":  false,
+                                                                      "schema":  {
+                                                                                     "type":  "string"
+                                                                                 }
+                                                                  },
+                                                                  {
+                                                                      "name":  "type",
+                                                                      "in":  "query",
+                                                                      "required":  false,
+                                                                      "schema":  {
+                                                                                     "type":  "string"
+                                                                                 }
+                                                                  }
+                                                              ],
+                                               "responses":  {
+                                                                 "200":  {
+                                                                             "description":  "OK",
+                                                                             "content":  {
+                                                                                             "*/*":  "@{schema=}"
+                                                                                         }
+                                                                         }
+                                                             }
+                                           }
+                               },
+                  "/catalog/shows":  {
+                                         "get":  {
+                                                     "tags":  [
+                                                                  "external-catalog-controller"
+                                                              ],
+                                                     "operationId":  "getShows",
+                                                     "parameters":  [
+                                                                        {
+                                                                            "name":  "query",
+                                                                            "in":  "query",
+                                                                            "required":  false,
+                                                                            "schema":  {
+                                                                                           "type":  "string"
+                                                                                       }
+                                                                        }
+                                                                    ],
+                                                     "responses":  {
+                                                                       "200":  {
+                                                                                   "description":  "OK",
+                                                                                   "content":  {
+                                                                                                   "*/*":  "@{schema=}"
+                                                                                               }
+                                                                               }
+                                                                   }
+                                                 }
+                                     },
+                  "/catalog/movies":  {
+                                          "get":  {
+                                                      "tags":  [
+                                                                   "external-catalog-controller"
+                                                               ],
+                                                      "operationId":  "getMovies",
+                                                      "parameters":  [
+                                                                         {
+                                                                             "name":  "query",
+                                                                             "in":  "query",
+                                                                             "required":  false,
+                                                                             "schema":  {
+                                                                                            "type":  "string"
+                                                                                        }
+                                                                         }
+                                                                     ],
+                                                      "responses":  {
+                                                                        "200":  {
+                                                                                    "description":  "OK",
+                                                                                    "content":  {
+                                                                                                    "*/*":  "@{schema=}"
+                                                                                                }
+                                                                                }
+                                                                    }
+                                                  }
+                                      }
+              },
+    "components":  {
+                       "schemas":  {
+                                       "RegisterUserDTO":  {
+                                                               "type":  "object",
+                                                               "properties":  {
+                                                                                  "name":  {
+                                                                                               "type":  "string",
+                                                                                               "maxLength":  100,
+                                                                                               "minLength":  0
+                                                                                           },
+                                                                                  "email":  {
+                                                                                                "type":  "string",
+                                                                                                "maxLength":  150,
+                                                                                                "minLength":  0
+                                                                                            },
+                                                                                  "password":  {
+                                                                                                   "type":  "string",
+                                                                                                   "maxLength":  100,
+                                                                                                   "minLength":  6
+                                                                                               },
+                                                                                  "role":  {
+                                                                                               "type":  "string",
+                                                                                               "enum":  [
+                                                                                                            "ORGANIZER",
+                                                                                                            "CLIENT",
+                                                                                                            "PORTER"
+                                                                                                        ]
+                                                                                           }
+                                                                              },
+                                                               "required":  [
+                                                                                "email",
+                                                                                "name",
+                                                                                "password",
+                                                                                "role"
+                                                                            ]
+                                                           },
+                                       "UserResponseDTO":  {
+                                                               "type":  "object",
+                                                               "properties":  {
+                                                                                  "id":  {
+                                                                                             "type":  "integer",
+                                                                                             "format":  "int64"
+                                                                                         },
+                                                                                  "name":  {
+                                                                                               "type":  "string"
+                                                                                           },
+                                                                                  "email":  {
+                                                                                                "type":  "string"
+                                                                                            },
+                                                                                  "role":  {
+                                                                                               "type":  "string",
+                                                                                               "enum":  [
+                                                                                                            "ORGANIZER",
+                                                                                                            "CLIENT",
+                                                                                                            "PORTER"
+                                                                                                        ]
+                                                                                           }
+                                                                              }
+                                                           },
+                                       "LoginDTO":  {
+                                                        "type":  "object",
+                                                        "properties":  {
+                                                                           "email":  {
+                                                                                         "type":  "string"
+                                                                                     },
+                                                                           "password":  {
+                                                                                            "type":  "string"
+                                                                                        }
+                                                                       },
+                                                        "required":  [
+                                                                         "email",
+                                                                         "password"
+                                                                     ]
+                                                    },
+                                       "TokenResponseDTO":  {
+                                                                "type":  "object",
+                                                                "properties":  {
+                                                                                   "token":  {
+                                                                                                 "type":  "string"
+                                                                                             }
+                                                                               }
+                                                            },
+                                       "CreateReservationDTO":  {
+                                                                    "type":  "object",
+                                                                    "properties":  {
+                                                                                       "eventId":  {
+                                                                                                       "type":  "integer",
+                                                                                                       "format":  "int64"
+                                                                                                   },
+                                                                                       "seatNumbers":  {
+                                                                                                           "type":  "array",
+                                                                                                           "items":  {
+                                                                                                                         "type":  "string"
+                                                                                                                     }
+                                                                                                       },
+                                                                                       "quantity":  {
+                                                                                                        "type":  "integer",
+                                                                                                        "format":  "int32"
+                                                                                                    }
+                                                                                   },
+                                                                    "required":  [
+                                                                                     "eventId"
+                                                                                 ]
+                                                                },
+                                       "ReservationResponseDTO":  {
+                                                                      "type":  "object",
+                                                                      "properties":  {
+                                                                                         "id":  {
+                                                                                                    "type":  "integer",
+                                                                                                    "format":  "int64"
+                                                                                                },
+                                                                                         "eventId":  {
+                                                                                                         "type":  "integer",
+                                                                                                         "format":  "int64"
+                                                                                                     },
+                                                                                         "eventTitle":  {
+                                                                                                            "type":  "string"
+                                                                                                        },
+                                                                                         "clientId":  {
+                                                                                                          "type":  "integer",
+                                                                                                          "format":  "int64"
+                                                                                                      },
+                                                                                         "clientName":  {
+                                                                                                            "type":  "string"
+                                                                                                        },
+                                                                                         "status":  {
+                                                                                                        "type":  "string",
+                                                                                                        "enum":  [
+                                                                                                                     "PENDING_PAYMENT",
+                                                                                                                     "CONFIRMED",
+                                                                                                                     "CANCELLED",
+                                                                                                                     "EXPIRED"
+                                                                                                                 ]
+                                                                                                    },
+                                                                                         "totalAmount":  {
+                                                                                                             "type":  "number"
+                                                                                                         },
+                                                                                         "quantity":  {
+                                                                                                          "type":  "integer",
+                                                                                                          "format":  "int32"
+                                                                                                      },
+                                                                                         "seatNumbers":  {
+                                                                                                             "type":  "array",
+                                                                                                             "items":  {
+                                                                                                                           "type":  "string"
+                                                                                                                       }
+                                                                                                         },
+                                                                                         "expiresAt":  {
+                                                                                                           "type":  "string",
+                                                                                                           "format":  "date-time"
+                                                                                                       },
+                                                                                         "createdAt":  {
+                                                                                                           "type":  "string",
+                                                                                                           "format":  "date-time"
+                                                                                                       }
+                                                                                     }
+                                                                  },
+                                       "ProcessPaymentDTO":  {
+                                                                 "type":  "object",
+                                                                 "properties":  {
+                                                                                    "reservationId":  {
+                                                                                                          "type":  "integer",
+                                                                                                          "format":  "int64"
+                                                                                                      },
+                                                                                    "paymentMethod":  {
+                                                                                                          "type":  "string",
+                                                                                                          "enum":  [
+                                                                                                                       "CREDIT_CARD",
+                                                                                                                       "PIX",
+                                                                                                                       "BOLETO"
+                                                                                                                   ]
+                                                                                                      },
+                                                                                    "simulateStatus":  {
+                                                                                                           "type":  "string",
+                                                                                                           "enum":  [
+                                                                                                                        "APPROVED",
+                                                                                                                        "DECLINED"
+                                                                                                                    ]
+                                                                                                       },
+                                                                                    "effectiveStatus":  {
+                                                                                                            "type":  "string",
+                                                                                                            "enum":  [
+                                                                                                                         "APPROVED",
+                                                                                                                         "DECLINED"
+                                                                                                                     ]
+                                                                                                        }
+                                                                                },
+                                                                 "required":  [
+                                                                                  "paymentMethod",
+                                                                                  "reservationId"
+                                                                              ]
+                                                             },
+                                       "PaymentResponseDTO":  {
+                                                                  "type":  "object",
+                                                                  "properties":  {
+                                                                                     "paymentId":  {
+                                                                                                       "type":  "integer",
+                                                                                                       "format":  "int64"
+                                                                                                   },
+                                                                                     "reservationId":  {
+                                                                                                           "type":  "integer",
+                                                                                                           "format":  "int64"
+                                                                                                       },
+                                                                                     "status":  {
+                                                                                                    "type":  "string",
+                                                                                                    "enum":  [
+                                                                                                                 "APPROVED",
+                                                                                                                 "DECLINED"
+                                                                                                             ]
+                                                                                                },
+                                                                                     "paymentMethod":  {
+                                                                                                           "type":  "string",
+                                                                                                           "enum":  [
+                                                                                                                        "CREDIT_CARD",
+                                                                                                                        "PIX",
+                                                                                                                        "BOLETO"
+                                                                                                                    ]
+                                                                                                       },
+                                                                                     "amount":  {
+                                                                                                    "type":  "number"
+                                                                                                },
+                                                                                     "transactionId":  {
+                                                                                                           "type":  "string"
+                                                                                                       },
+                                                                                     "message":  {
+                                                                                                     "type":  "string"
+                                                                                                 },
+                                                                                     "createdAt":  {
+                                                                                                       "type":  "string",
+                                                                                                       "format":  "date-time"
+                                                                                                   },
+                                                                                     "tickets":  {
+                                                                                                     "type":  "array",
+                                                                                                     "items":  {
+                                                                                                                   "$ref":  "#/components/schemas/TicketResponseDTO"
+                                                                                                               }
+                                                                                                 }
+                                                                                 }
+                                                              },
+                                       "TicketResponseDTO":  {
+                                                                 "type":  "object",
+                                                                 "properties":  {
+                                                                                    "id":  {
+                                                                                               "type":  "integer",
+                                                                                               "format":  "int64"
+                                                                                           },
+                                                                                    "reservationId":  {
+                                                                                                          "type":  "integer",
+                                                                                                          "format":  "int64"
+                                                                                                      },
+                                                                                    "eventId":  {
+                                                                                                    "type":  "integer",
+                                                                                                    "format":  "int64"
+                                                                                                },
+                                                                                    "eventTitle":  {
+                                                                                                       "type":  "string"
+                                                                                                   },
+                                                                                    "eventDate":  {
+                                                                                                      "type":  "string",
+                                                                                                      "format":  "date-time"
+                                                                                                  },
+                                                                                    "location":  {
+                                                                                                     "type":  "string"
+                                                                                                 },
+                                                                                    "imageUrl":  {
+                                                                                                     "type":  "string"
+                                                                                                 },
+                                                                                    "seatNumber":  {
+                                                                                                       "type":  "string"
+                                                                                                   },
+                                                                                    "qrCodeToken":  {
+                                                                                                        "type":  "string"
+                                                                                                    },
+                                                                                    "shareToken":  {
+                                                                                                       "type":  "string"
+                                                                                                   },
+                                                                                    "validated":  {
+                                                                                                      "type":  "boolean"
+                                                                                                  },
+                                                                                    "validatedAt":  {
+                                                                                                        "type":  "string",
+                                                                                                        "format":  "date-time"
+                                                                                                    },
+                                                                                    "createdAt":  {
+                                                                                                      "type":  "string",
+                                                                                                      "format":  "date-time"
+                                                                                                  }
+                                                                                }
+                                                             },
+                                       "CreateEventDTO":  {
+                                                              "type":  "object",
+                                                              "properties":  {
+                                                                                 "title":  {
+                                                                                               "type":  "string",
+                                                                                               "maxLength":  255,
+                                                                                               "minLength":  0
+                                                                                           },
+                                                                                 "description":  {
+                                                                                                     "type":  "string",
+                                                                                                     "maxLength":  2000,
+                                                                                                     "minLength":  0
+                                                                                                 },
+                                                                                 "imageUrl":  {
+                                                                                                  "type":  "string",
+                                                                                                  "maxLength":  500,
+                                                                                                  "minLength":  0
+                                                                                              },
+                                                                                 "category":  {
+                                                                                                  "type":  "string",
+                                                                                                  "maxLength":  100,
+                                                                                                  "minLength":  0
+                                                                                              },
+                                                                                 "type":  {
+                                                                                              "type":  "string",
+                                                                                              "enum":  [
+                                                                                                           "MOVIE",
+                                                                                                           "SHOW",
+                                                                                                           "THEATER"
+                                                                                                       ]
+                                                                                          },
+                                                                                 "eventDate":  {
+                                                                                                   "type":  "string",
+                                                                                                   "format":  "date-time"
+                                                                                               },
+                                                                                 "location":  {
+                                                                                                  "type":  "string",
+                                                                                                  "maxLength":  255,
+                                                                                                  "minLength":  0
+                                                                                              },
+                                                                                 "price":  {
+                                                                                               "type":  "number",
+                                                                                               "maximum":  100000.00,
+                                                                                               "minimum":  0.01
+                                                                                           },
+                                                                                 "seatingType":  {
+                                                                                                     "type":  "string",
+                                                                                                     "enum":  [
+                                                                                                                  "SEATED",
+                                                                                                                  "GENERAL_ADMISSION"
+                                                                                                              ]
+                                                                                                 },
+                                                                                 "totalCapacity":  {
+                                                                                                       "type":  "integer",
+                                                                                                       "format":  "int32",
+                                                                                                       "maximum":  100000,
+                                                                                                       "minimum":  1
+                                                                                                   },
+                                                                                 "seatRows":  {
+                                                                                                  "type":  "integer",
+                                                                                                  "format":  "int32",
+                                                                                                  "maximum":  26,
+                                                                                                  "minimum":  1
+                                                                                              },
+                                                                                 "seatColumns":  {
+                                                                                                     "type":  "integer",
+                                                                                                     "format":  "int32",
+                                                                                                     "maximum":  100,
+                                                                                                     "minimum":  1
+                                                                                                 }
+                                                                             },
+                                                              "required":  [
+                                                                               "description",
+                                                                               "eventDate",
+                                                                               "location",
+                                                                               "price",
+                                                                               "seatingType",
+                                                                               "title",
+                                                                               "totalCapacity",
+                                                                               "type"
+                                                                           ]
+                                                          },
+                                       "EventResponseDTO":  {
+                                                                "type":  "object",
+                                                                "properties":  {
+                                                                                   "id":  {
+                                                                                              "type":  "integer",
+                                                                                              "format":  "int64"
+                                                                                          },
+                                                                                   "title":  {
+                                                                                                 "type":  "string"
+                                                                                             },
+                                                                                   "description":  {
+                                                                                                       "type":  "string"
+                                                                                                   },
+                                                                                   "imageUrl":  {
+                                                                                                    "type":  "string"
+                                                                                                },
+                                                                                   "category":  {
+                                                                                                    "type":  "string"
+                                                                                                },
+                                                                                   "type":  {
+                                                                                                "type":  "string",
+                                                                                                "enum":  [
+                                                                                                             "MOVIE",
+                                                                                                             "SHOW",
+                                                                                                             "THEATER"
+                                                                                                         ]
+                                                                                            },
+                                                                                   "eventDate":  {
+                                                                                                     "type":  "string",
+                                                                                                     "format":  "date-time"
+                                                                                                 },
+                                                                                   "location":  {
+                                                                                                    "type":  "string"
+                                                                                                },
+                                                                                   "price":  {
+                                                                                                 "type":  "number"
+                                                                                             },
+                                                                                   "seatingType":  {
+                                                                                                       "type":  "string",
+                                                                                                       "enum":  [
+                                                                                                                    "SEATED",
+                                                                                                                    "GENERAL_ADMISSION"
+                                                                                                                ]
+                                                                                                   },
+                                                                                   "totalCapacity":  {
+                                                                                                         "type":  "integer",
+                                                                                                         "format":  "int32"
+                                                                                                     },
+                                                                                   "availableCapacity":  {
+                                                                                                             "type":  "integer",
+                                                                                                             "format":  "int32"
+                                                                                                         },
+                                                                                   "organizerId":  {
+                                                                                                       "type":  "integer",
+                                                                                                       "format":  "int64"
+                                                                                                   },
+                                                                                   "organizerName":  {
+                                                                                                         "type":  "string"
+                                                                                                     },
+                                                                                   "status":  {
+                                                                                                  "type":  "string",
+                                                                                                  "enum":  [
+                                                                                                               "PUBLISHED",
+                                                                                                               "CANCELLED"
+                                                                                                           ]
+                                                                                              },
+                                                                                   "createdAt":  {
+                                                                                                     "type":  "string",
+                                                                                                     "format":  "date-time"
+                                                                                                 },
+                                                                                   "seats":  {
+                                                                                                 "type":  "array",
+                                                                                                 "items":  {
+                                                                                                               "$ref":  "#/components/schemas/SeatResponseDTO"
+                                                                                                           }
+                                                                                             }
+                                                                               }
+                                                            },
+                                       "SeatResponseDTO":  {
+                                                               "type":  "object",
+                                                               "properties":  {
+                                                                                  "id":  {
+                                                                                             "type":  "integer",
+                                                                                             "format":  "int64"
+                                                                                         },
+                                                                                  "seatNumber":  {
+                                                                                                     "type":  "string"
+                                                                                                 },
+                                                                                  "status":  {
+                                                                                                 "type":  "string",
+                                                                                                 "enum":  [
+                                                                                                              "AVAILABLE",
+                                                                                                              "RESERVED",
+                                                                                                              "SOLD"
+                                                                                                          ]
+                                                                                             }
+                                                                              }
+                                                           },
+                                       "AssignPortersDTO":  {
+                                                                "type":  "object",
+                                                                "properties":  {
+                                                                                   "porterIds":  {
+                                                                                                     "type":  "array",
+                                                                                                     "items":  {
+                                                                                                                   "type":  "integer",
+                                                                                                                   "format":  "int64"
+                                                                                                               }
+                                                                                                 }
+                                                                               },
+                                                                "required":  [
+                                                                                 "porterIds"
+                                                                             ]
+                                                            },
+                                       "ValidateCheckinDTO":  {
+                                                                  "type":  "object",
+                                                                  "properties":  {
+                                                                                     "eventId":  {
+                                                                                                     "type":  "integer",
+                                                                                                     "format":  "int64"
+                                                                                                 },
+                                                                                     "qrCodeToken":  {
+                                                                                                         "type":  "string"
+                                                                                                     }
+                                                                                 },
+                                                                  "required":  [
+                                                                                   "eventId",
+                                                                                   "qrCodeToken"
+                                                                               ]
+                                                              },
+                                       "CheckinResponseDTO":  {
+                                                                  "type":  "object",
+                                                                  "properties":  {
+                                                                                     "status":  {
+                                                                                                    "type":  "string",
+                                                                                                    "enum":  [
+                                                                                                                 "VALID",
+                                                                                                                 "ALREADY_USED",
+                                                                                                                 "WRONG_EVENT",
+                                                                                                                 "INVALID"
+                                                                                                             ]
+                                                                                                },
+                                                                                     "message":  {
+                                                                                                     "type":  "string"
+                                                                                                 },
+                                                                                     "ticketId":  {
+                                                                                                      "type":  "integer",
+                                                                                                      "format":  "int64"
+                                                                                                  },
+                                                                                     "eventTitle":  {
+                                                                                                        "type":  "string"
+                                                                                                    },
+                                                                                     "clientName":  {
+                                                                                                        "type":  "string"
+                                                                                                    },
+                                                                                     "seatNumber":  {
+                                                                                                        "type":  "string"
+                                                                                                    },
+                                                                                     "validatedAt":  {
+                                                                                                         "type":  "string",
+                                                                                                         "format":  "date-time"
+                                                                                                     }
+                                                                                 }
+                                                              },
+                                       "PublicTicketDTO":  {
+                                                               "type":  "object",
+                                                               "properties":  {
+                                                                                  "eventTitle":  {
+                                                                                                     "type":  "string"
+                                                                                                 },
+                                                                                  "eventDate":  {
+                                                                                                    "type":  "string",
+                                                                                                    "format":  "date-time"
+                                                                                                },
+                                                                                  "location":  {
+                                                                                                   "type":  "string"
+                                                                                               },
+                                                                                  "imageUrl":  {
+                                                                                                   "type":  "string"
+                                                                                               },
+                                                                                  "category":  {
+                                                                                                   "type":  "string"
+                                                                                               },
+                                                                                  "seatNumber":  {
+                                                                                                     "type":  "string"
+                                                                                                 },
+                                                                                  "qrCodeToken":  {
+                                                                                                      "type":  "string"
+                                                                                                  },
+                                                                                  "validated":  {
+                                                                                                    "type":  "boolean"
+                                                                                                },
+                                                                                  "clientFirstName":  {
+                                                                                                          "type":  "string"
+                                                                                                      }
+                                                                              }
+                                                           },
+                                       "CheckinStatsDTO":  {
+                                                               "type":  "object",
+                                                               "properties":  {
+                                                                                  "eventId":  {
+                                                                                                  "type":  "integer",
+                                                                                                  "format":  "int64"
+                                                                                              },
+                                                                                  "eventTitle":  {
+                                                                                                     "type":  "string"
+                                                                                                 },
+                                                                                  "totalTicketsSold":  {
+                                                                                                           "type":  "integer",
+                                                                                                           "format":  "int64"
+                                                                                                       },
+                                                                                  "checkedInCount":  {
+                                                                                                         "type":  "integer",
+                                                                                                         "format":  "int64"
+                                                                                                     },
+                                                                                  "pendingCount":  {
+                                                                                                       "type":  "integer",
+                                                                                                       "format":  "int64"
+                                                                                                   }
+                                                                              }
+                                                           },
+                                       "CatalogItemDTO":  {
+                                                              "type":  "object",
+                                                              "properties":  {
+                                                                                 "externalId":  {
+                                                                                                    "type":  "string"
+                                                                                                },
+                                                                                 "source":  {
+                                                                                                "type":  "string"
+                                                                                            },
+                                                                                 "type":  {
+                                                                                              "type":  "string"
+                                                                                          },
+                                                                                 "title":  {
+                                                                                               "type":  "string"
+                                                                                           },
+                                                                                 "description":  {
+                                                                                                     "type":  "string"
+                                                                                                 },
+                                                                                 "imageUrl":  {
+                                                                                                  "type":  "string"
+                                                                                              },
+                                                                                 "category":  {
+                                                                                                  "type":  "string"
+                                                                                              },
+                                                                                 "originalDate":  {
+                                                                                                      "type":  "string"
+                                                                                                  },
+                                                                                 "venueSuggestion":  {
+                                                                                                         "type":  "string"
+                                                                                                     }
+                                                                             }
+                                                          }
+                                   },
+                       "securitySchemes":  {
+                                               "BearerAuth":  {
+                                                                  "type":  "http",
+                                                                  "description":  "Insira seu token JWT gerado no endpoint /users/login para autenticar as requisiÃ§Ãµes protegidas.",
+                                                                  "name":  "BearerAuth",
+                                                                  "scheme":  "bearer",
+                                                                  "bearerFormat":  "JWT"
+                                                              }
+                                           }
+                   }
+}
